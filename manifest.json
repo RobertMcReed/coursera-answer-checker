@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "CourseraChecker",
+  "description": "A RegEx implementation to used to check your answers with table-formatted expected answers.",
+  "version": "1",
+  "author": "Robert Reed",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_title": "Coursera-Checker",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/coursera-16x16.png",
+      "32": "images/coursera-32x32.png",
+      "48": "images/coursera-48x48.png",
+      "128": "images/coursera-128x128.png"
+    }
+  },
+  "icons": {
+    "16": "images/coursera-16x16.png",
+    "32": "images/coursera-32x32.png",
+    "48": "images/coursera-48x48.png",
+    "128": "images/coursera-128x128.png"
+  },
+  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://hub.coursera-notebooks.org/*"],
+      "run_at": "document_end",
+      "js": ["content-script.js"]
+    }
+  ]
+}
