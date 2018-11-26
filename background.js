@@ -1,21 +1,25 @@
-const defaultPattern = (new RegExp('[a-zA-Z]\\d*|[\\s =:!%_\/]')).toString().slice(1, -1);
+'use strict';
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ 
-    pattern: defaultPattern,
-    defaultPattern,
-  }, () => {
-    console.log('Pattern Set:', defaultPattern);
-  });
+(() => {
+  const defaultPattern = (new RegExp('[a-zA-Z]\\d*|[\\s =:!%_\/]')).toString().slice(1, -1);
 
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {
-          hostEquals: 'hub.coursera-notebooks.org'
-        },
-      })],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
+  chrome.runtime.onInstalled.addListener(() => {
+    chrome.storage.sync.set({ 
+      pattern: defaultPattern,
+      defaultPattern,
+    }, () => {
+      console.log('[INFO] Default Pattern Set:', defaultPattern);
+    });
+
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, () => {
+      chrome.declarativeContent.onPageChanged.addRules([{
+        conditions: [new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: {
+            hostEquals: 'hub.coursera-notebooks.org'
+          },
+        })],
+        actions: [new chrome.declarativeContent.ShowPageAction()]
+      }]);
+    });
   });
-});
+})();
