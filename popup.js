@@ -45,7 +45,7 @@
           updateContentScript();
         });
       });
-    })
+    });
     
     chrome.storage.sync.get('pattern', ({ pattern }) => {
       inputEl.value = pattern;

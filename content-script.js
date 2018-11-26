@@ -46,7 +46,7 @@
 		});
 	
 		return idx;
-	}
+	};
 
 	const fade = (start, end) => () => {
 		if (!state.fading) {
@@ -75,7 +75,7 @@
 		setTimeout(() => {
 			fadeOut();
 		}, 1625);
-	}
+	};
 
 	const showIndicator = (match) => {
 		const color = match ? '#00ff00' : '#ff0000';
@@ -109,7 +109,7 @@
 			console.log(`${shorter.slice(0, idx)}%c${shorter.slice(idx)}`, 'color: red');
 			console.log(`${longer.slice(0, idx)}%c${longer.slice(idx)}`, 'color: red');
 		}
-	}
+	};
 	
 	const handleTextSelected = () => {
 		const grabbedText = getSelectedText();
@@ -129,7 +129,7 @@
 				else console.log('[INFO]: Regex not ready...');
 			}
 		}
-	}
+	};
 
 	const setupIndicator = () => {
 		const indicator = document.createElement('div');
@@ -145,7 +145,7 @@
 		indicator.style.borderRadius = '50%';
 		indicator.style.border = '1px solid black';
 		document.body.appendChild(indicator);
-	}
+	};
 	
 	chrome.runtime.onMessage.addListener(({ update }) => {
 		if (update) updatePattern();
