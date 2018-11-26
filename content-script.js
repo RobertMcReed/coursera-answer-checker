@@ -4,6 +4,8 @@
 	const state = {
 		regex: null,
 		textPair: [],
+		indicator: null,
+		fading: false,
 	};
 	
 	const prom = (fn) => (...args) => new Promise((resolve) => {
@@ -45,6 +47,41 @@
 	
 		return idx;
 	}
+
+	const fade = (start, end) => () => {
+		if (!state.fading) {
+			state.fading = true;
+
+			let opacity = start;
+			const fadingIn = start < end;
+			const multiplier = fadingIn ? 1 : -1;
+	
+			const interval = setInterval(() => {
+				if (fadingIn && opacity < end || !fadingIn && opacity > end) {
+					opacity += 0.04 * multiplier;
+					state.indicator.style.opacity = opacity;
+				} else {
+					state.fading = false;
+					clearInterval(interval)
+				}
+			}, 25);
+		}
+	};
+
+	const fadeIn = fade(0, 1);
+	const fadeOut = fade(1, 0);
+	const fadeInAndOut = () => {
+		fadeIn();
+		setTimeout(() => {
+			fadeOut();
+		}, 1625);
+	}
+
+	const showIndicator = (match) => {
+		const color = match ? '#00ff00' : '#ff0000';
+		state.indicator.style.backgroundColor = color;
+		fadeInAndOut();
+	};
 	
 	const checkTextPair = () => {
 		const { textPair } = state;
@@ -65,6 +102,8 @@
 		const verdictColor = 'color: ' + (areEqual ? 'green' : 'red');
 		console.log('Verdict: ' + verdictText, verdictColor);
 	
+		showIndicator(areEqual);
+
 		if (!areEqual) {
 			const idx = findDifferenceIndex(shorter, longer);
 			console.log(`${shorter.slice(0, idx)}%c${shorter.slice(idx)}`, 'color: red');
@@ -91,14 +130,33 @@
 			}
 		}
 	}
+
+	const setupIndicator = () => {
+		const indicator = document.createElement('div');
+		state.indicator = indicator;
+		indicator.id = 'indicator';
+		indicator.style.opacity = '0';
+		indicator.style.position = 'fixed';
+		indicator.style.top = '10px';
+		indicator.style.right = '10px';
+		indicator.style.width = '15px';
+		indicator.style.height = '15px';
+		indicator.style.zIndex = '100';
+		indicator.style.borderRadius = '50%';
+		indicator.style.border = '1px solid black';
+		document.body.appendChild(indicator);
+	}
 	
 	chrome.runtime.onMessage.addListener(({ update }) => {
 		if (update) updatePattern();
 	});
-	
-	updatePattern()
-		.then(() => {
-			console.log('[INFO]: Listening for highlights...');
-			window.addEventListener('mouseup', handleTextSelected);
-		});
+
+	window.onload = () => {
+		setupIndicator();
+		updatePattern()
+			.then(() => {
+				console.log('[INFO]: Listening for highlights...');
+				window.addEventListener('mouseup', handleTextSelected);
+			});
+	};
 })();
