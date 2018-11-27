@@ -20,6 +20,10 @@ The extension will only run on pages that match `https://hub.coursera-notebooks.
 
 Install from the Chrome extension store, or add the unpacked module manually.
 
+## Support
+
+Email <a href="mailto:robert.mc.reed@gmail.com">robert.mc.reed@gmail.com</a>.
+
 
 ## TODO
 
