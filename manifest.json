@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "CourseraChecker",
-  "description": "A RegEx implementation to used to check your answers with table-formatted expected answers.",
-  "version": "1",
+  "name": "Coursera Answer Checker",
+  "description": "Determine if your answers match the expected answers in a Coursera Jupyter notebook.",
+  "version": "1.0.0",
   "author": "Robert Reed",
   "background": {
     "scripts": ["background.js"],

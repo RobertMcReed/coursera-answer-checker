@@ -11,6 +11,10 @@ h2 {
   font-size: 14px;
 }
 
+p {
+  font-size: 13px;
+}
+
 header {
   margin-bottom: 14px;
 }
@@ -21,6 +25,10 @@ header, #pattern-form {
   align-items: center;
 }
 
+#pattern-form {
+  margin-bottom: 14px;
+}
+
 #pattern {
   flex-grow: 1;
   font-size: 14px;
@@ -29,4 +37,10 @@ header, #pattern-form {
 
 #submit-btn {
   margin-left: 8px;
+}
+
+#gif {
+  width: 100%;
+  border: 1px solid black;
+  margin: 14px 0;
 }
